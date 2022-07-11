@@ -55,10 +55,6 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   double xPosition = 0;
   double yPosition = 0;
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
