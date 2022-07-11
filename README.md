@@ -1,6 +1,6 @@
 # parent_distance
 
-A widget that calculates distance between self and targeted ancestor parent by traversing it.
+A widget that calculates distance between self and targeted ancestor parent.
 
 <table>
   <tr>
