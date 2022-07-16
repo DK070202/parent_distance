@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:parent_distance/helper/height_ext.dart';
 
 import 'parent_distance/parent_distance_widget.dart';
 
@@ -7,12 +9,73 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: StackParentExample(),
+      home: SimpleTextLayout(),
+    );
+  }
+}
+
+class SimpleTextLayout extends StatelessWidget {
+  const SimpleTextLayout({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            18.height,
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Spacer(),
+
+                    /// For setting up all available width.
+                    const SizedBox(
+                      width: double.infinity,
+                    ),
+                    ParentDistance(
+                      color: Colors.deepOrange,
+                      skipParent: 2,
+                      child: Text(
+                        'Hello there',
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
+                    16.height,
+                    const ParentDistance(
+                      skipParent: 2,
+                      child: Text(
+                        'Hey this is fake, randomly generated data, no no it is fake written data. Whatever it is but it works',
+                      ),
+                    ),
+                    20.height,
+                    ParentDistance(
+                      color: Colors.green,
+                      skipParent: 2,
+                      child: CupertinoButton.filled(
+                        child: const Text('Tap me'),
+                        onPressed: () {},
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -30,8 +93,11 @@ class _StackParentExampleState extends State<StackParentExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: movableItems,
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Stack(
+          children: movableItems,
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -45,7 +111,7 @@ class _StackParentExampleState extends State<StackParentExample> {
 }
 
 class MoveableStackItem extends StatefulWidget {
-  const MoveableStackItem({Key? key}) : super(key: key);
+  const MoveableStackItem({super.key});
 
   @override
   State<MoveableStackItem> createState() => _MoveableStackItemState();
@@ -54,11 +120,6 @@ class MoveableStackItem extends StatefulWidget {
 class _MoveableStackItemState extends State<MoveableStackItem> {
   double xPosition = 0;
   double yPosition = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +135,10 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
         },
         child: ParentDistance(
           skipParent: 2,
+          color: Colors.redAccent,
           child: Container(
-            width: 150,
-            height: 150,
+            width: 100,
+            height: 100,
             color: Colors.blue,
           ),
         ),

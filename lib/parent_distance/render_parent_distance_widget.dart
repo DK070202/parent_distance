@@ -1,27 +1,38 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class RenderParentDistance extends RenderProxyBox {
-  RenderParentDistance(int skipCount) : _skipParent = skipCount;
+  RenderParentDistance(int skipCount, Color color)
+      : _skipParent = skipCount,
+        _color = color;
 
   int _skipParent;
-
-  int get skipParent => _skipParent;
   set skipParent(int count) {
     _skipParent = count;
+    markNeedsPaint();
+  }
+
+  Color _color;
+  set color(Color color) {
+    _color = color;
+    markNeedsPaint();
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
+    context.paintChild(child!, offset);
+
     /// For skipping parent for adjusting targeted parent.
     AbstractNode? node = parent;
-    for (var i = 0; i < skipParent; i++) {
+    for (var i = 0; i < _skipParent; i++) {
       node = node!.parent!;
     }
 
     final paint = Paint()
-      ..color = Colors.red
+      ..color = _color
       ..strokeWidth = 1.5
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
@@ -61,8 +72,28 @@ class RenderParentDistance extends RenderProxyBox {
           Offset(offset.dx + (child!.size.width / 2),
               offset.dy + child!.size.height),
           paint);
-    }
 
-    context.paintChild(child!, offset);
+      /// For creating rect around child and parent-----------------------------
+      context.canvas.drawRect(parentsOffsetGlobally & sizeOfParent, paint);
+      context.canvas.drawRect(offset & child!.size, paint);
+    }
+  }
+
+  ui.Paragraph paintPara(String text) {
+    final textStyle = ui.TextStyle(
+      color: Colors.black,
+      fontSize: 30,
+    );
+    final paragraphStyle = ui.ParagraphStyle(
+      textDirection: TextDirection.ltr,
+    );
+    final paragraphBuilder = ui.ParagraphBuilder(paragraphStyle)
+      ..pushStyle(textStyle)
+      ..addText(text);
+    final localConstraints =
+        ui.ParagraphConstraints(width: constraints.biggest.width);
+    final paragraph = paragraphBuilder.build();
+    paragraph.layout(localConstraints);
+    return paragraph;
   }
 }
