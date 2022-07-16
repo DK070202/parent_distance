@@ -122,6 +122,11 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   double yPosition = 0;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Positioned(
       top: yPosition,
