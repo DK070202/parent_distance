@@ -24,6 +24,7 @@ class RenderParentDistance extends RenderProxyBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     context.paintChild(child!, offset);
+    print(" ${localToGlobal(Offset.zero)}this is offset:$offset");
 
     /// For skipping parent for adjusting targeted parent.
     AbstractNode? node = parent;
@@ -76,13 +77,27 @@ class RenderParentDistance extends RenderProxyBox {
       /// For creating rect around child and parent-----------------------------
       context.canvas.drawRect(parentsOffsetGlobally & sizeOfParent, paint);
       context.canvas.drawRect(offset & child!.size, paint);
+
+      final ui.Paragraph paragraph = paintParagraph(
+        'Y:${(offset.dy - parentsOffsetGlobally.dy).floorToDouble()} X: ${(offset.dx - parentsOffsetGlobally.dx).floorToDouble()}',
+      );
+
+      context.canvas.drawRect(
+          (Offset(offset.dx, offset.dy - paragraph.height)) &
+              ui.Size(paragraph.longestLine, paragraph.height),
+          paint);
+
+      context.canvas.drawParagraph(
+        paragraph,
+        Offset(offset.dx, offset.dy - paragraph.height),
+      );
     }
   }
 
-  ui.Paragraph paintPara(String text) {
+  ui.Paragraph paintParagraph(String text) {
     final textStyle = ui.TextStyle(
       color: Colors.black,
-      fontSize: 30,
+      fontSize: 10,
     );
     final paragraphStyle = ui.ParagraphStyle(
       textDirection: TextDirection.ltr,

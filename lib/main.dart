@@ -27,53 +27,47 @@ class SimpleTextLayout extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            18.height,
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                margin: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Spacer(),
+        padding: const EdgeInsets.symmetric(horizontal: 0),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          margin: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              // const Spacer(),
 
-                    /// For setting up all available width.
-                    const SizedBox(
-                      width: double.infinity,
-                    ),
-                    ParentDistance(
-                      color: Colors.deepOrange,
-                      skipParent: 2,
-                      child: Text(
-                        'Hello there',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                    ),
-                    16.height,
-                    const ParentDistance(
-                      skipParent: 2,
-                      child: Text(
-                        'Hey this is fake, randomly generated data, no no it is fake written data. Whatever it is but it works',
-                      ),
-                    ),
-                    20.height,
-                    ParentDistance(
-                      color: Colors.green,
-                      skipParent: 2,
-                      child: CupertinoButton.filled(
-                        child: const Text('Tap me'),
-                        onPressed: () {},
-                      ),
-                    ),
-                    const Spacer(),
-                  ],
+              /// For setting up all available width.
+              const SizedBox(
+                width: double.infinity,
+              ),
+              ParentDistance(
+                color: Colors.deepOrange,
+                skipParent: 1,
+                child: Text(
+                  'Hello there',
+                  style: Theme.of(context).textTheme.headline5,
                 ),
               ),
-            ),
-          ],
+              16.height,
+              const ParentDistance(
+                skipParent: 1,
+                child: Text(
+                  'Hey this is fake, randomly generated data, no no it is fake written data. Whatever it is but it works',
+                ),
+              ),
+              20.height,
+              ParentDistance(
+                color: Colors.green,
+                skipParent: 1,
+                child: CupertinoButton.filled(
+                  child: const Text('Tap me'),
+                  onPressed: () {},
+                ),
+              ),
+              // const Spacer(),
+            ],
+          ),
         ),
       ),
     );
